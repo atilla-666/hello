@@ -37,10 +37,21 @@ jobs:
   my_prod:
     runs-on: ubuntu-latest
     needs: [my_test]
+    env:
+      VAR1: "This is Job 1"
+      VAR2: "This is Job 2"
     
     steps:
     - name: Print Hello message
       run : echo "Hello world from Prod Job"
+    
+    - name: Print env vars
+      run: |
+        echo "Var1 = ${{ env.VAR1 }}"
+        echo "Var2 = ${{ env.VAR2 }}"
+        echo "Var3 = $LOCAL_VAR"
+      env:
+        LOCAL_VAR: "This is Local Environment Variable"
       
     - name: Print Deployment Package
       run : echo "Deploy Package name is ${{ env.DEPLOY_PACKAGE_NAME }}"
